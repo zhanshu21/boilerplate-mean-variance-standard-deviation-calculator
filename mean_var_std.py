@@ -7,37 +7,22 @@ def calculate(list):
         raise ValueError("List must contain nine numbers.")
 
     newlist = np.array(list).reshape(3, 3)
-    calculations = {
-    'mean': [],
-    'variance': [],
-    'standard deviation': [],
-    'max': [],
-    'min': [],
-    'sum': []
+    calculations = {}
+    operation = {
+    'mean': 'mean',
+    'variance': 'var',
+    'standard deviation': 'std',
+    'max': 'max',
+    'min': 'min', 
+    'sum': 'sum'
     }
-
-    calculations['mean'].append(np.mean(newlist, axis=0).tolist())
-    calculations['mean'].append(np.mean(newlist, axis=1).tolist())
-    calculations['mean'].append(np.mean(newlist))
-
-    calculations['variance'].append(np.var(newlist, axis=0).tolist())
-    calculations['variance'].append(np.var(newlist, axis=1).tolist())
-    calculations['variance'].append(np.var(newlist))
-
-    calculations['standard deviation'].append(np.std(newlist, axis=0).tolist())
-    calculations['standard deviation'].append(np.std(newlist, axis=1).tolist())
-    calculations['standard deviation'].append(np.std(newlist))
     
-    calculations['max'].append(np.max(newlist, axis=0).tolist())
-    calculations['max'].append(np.max(newlist, axis=1).tolist())
-    calculations['max'].append(np.max(newlist))
-
-    calculations['min'].append(np.min(newlist, axis=0).tolist())
-    calculations['min'].append(np.min(newlist, axis=1).tolist())
-    calculations['min'].append(np.min(newlist))
-    
-    calculations['sum'].append(np.sum(newlist, axis=0).tolist())
-    calculations['sum'].append(np.sum(newlist, axis=1).tolist())
-    calculations['sum'].append(np.sum(newlist))
+    # The getattr() method returns the value of the named attribute of an object
+    for key, method in operation.items():
+        calculations[key] = [
+        getattr(newlist, method)(axis=0).tolist(),
+        getattr(newlist, method)(axis=1).tolist(),
+        getattr(newlist, method)()
+        ]
 
     return calculations
